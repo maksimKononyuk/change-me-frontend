@@ -171,10 +171,7 @@ function equalize(array) {
 function ExpertsPage(props) {
   useEffect(() => {
     axios.get('/specializations').then((res) => {
-      const specializationsArr = res.data.map((item) => {
-        return item.name
-      })
-      setSpecializations(specializationsArr)
+      setSpecializations(res.data)
     })
   }, [])
 
@@ -208,7 +205,11 @@ function ExpertsPage(props) {
   //   'ЛЕЧЕНИЯ',
   //   'АЗВЛЕЧЕНИЯ',
   // ]);
-  const f = equalize(specializations)
+  const f = equalize(
+    specializations.map((item) => {
+      return item.name
+    })
+  )
   const types = useRef()
   const [filters, setFilters] = useState(Array(12).fill(false))
   const [data, setData] = useState([...dataContact])
