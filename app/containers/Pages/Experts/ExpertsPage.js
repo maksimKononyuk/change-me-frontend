@@ -1,16 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react'
 
-import { Helmet } from 'react-helmet';
-import PropTypes from 'prop-types';
-import ToggleStar from '@material-ui/icons/Star';
-import ToggleStarBorder from '@material-ui/icons/StarBorder';
-import ThumbDown from '@material-ui/icons/ThumbDown';
-import ThumbUp from '@material-ui/icons/ThumbUp';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import Chat from '@material-ui/icons/Chat';
-import Videocam from '@material-ui/icons/Videocam';
-import brand from 'dan-api/dummy/brand';
+import { Helmet } from 'react-helmet'
+import PropTypes from 'prop-types'
+import ToggleStar from '@material-ui/icons/Star'
+import ToggleStarBorder from '@material-ui/icons/StarBorder'
+import ThumbDown from '@material-ui/icons/ThumbDown'
+import ThumbUp from '@material-ui/icons/ThumbUp'
+import Tooltip from '@material-ui/core/Tooltip'
+import IconButton from '@material-ui/core/IconButton'
+import Chat from '@material-ui/icons/Chat'
+import Videocam from '@material-ui/icons/Videocam'
+import brand from 'dan-api/dummy/brand'
 import {
   Grid,
   Paper,
@@ -19,8 +19,8 @@ import {
   Typography,
   Divider,
   Avatar,
-  List,
-} from '@material-ui/core';
+  List
+} from '@material-ui/core'
 import {
   ArrowBackIosSharp,
   ArrowDownwardSharp,
@@ -33,12 +33,13 @@ import {
   SkipPrevious,
   SkipPreviousOutlined,
   Sort,
-  ViewList,
-} from '@material-ui/icons';
-import classNames from 'classnames';
-import avatarApi from 'dan-api/images/avatars';
-import link from 'dan-api/ui/link';
-import styles from './experts-jss';
+  ViewList
+} from '@material-ui/icons'
+import axios from '../../../utils/axios'
+import classNames from 'classnames'
+import avatarApi from 'dan-api/images/avatars'
+import link from 'dan-api/ui/link'
+import styles from './experts-jss'
 
 const dataContact = [
   {
@@ -55,7 +56,7 @@ const dataContact = [
     companyEmail: 'johndoe@company.com',
     address: 'Ipsum Street no.77 Block A/5A, New York',
     website: 'http://doeclans.net',
-    favorited: false,
+    favorited: false
   },
   {
     id: '2',
@@ -71,7 +72,7 @@ const dataContact = [
     companyEmail: 'jimdoe@company.com',
     address: 'Lorem Street no.76 Block B/8B, Brooklyn',
     website: 'http://doejim.com',
-    favorited: true,
+    favorited: true
   },
   {
     id: '3',
@@ -87,7 +88,7 @@ const dataContact = [
     companyEmail: 'janedoe@company.com',
     address: 'Dolor Street no.76 Block B/8B, Tokyo',
     website: 'http://janedoe.com',
-    favorited: false,
+    favorited: false
   },
   {
     id: '4',
@@ -104,7 +105,7 @@ const dataContact = [
     companyEmail: '',
     address: 'Paskal Street no.101 Block B/10B, Samarinda',
     website: '',
-    favorited: 'false',
+    favorited: 'false'
   },
   {
     id: '5',
@@ -120,7 +121,7 @@ const dataContact = [
     companyEmail: 'jihan@company.com',
     address: 'Sit amet Street no.76 Block B/8B, New York',
     website: '',
-    favorited: true,
+    favorited: true
   },
   {
     id: '6',
@@ -136,89 +137,100 @@ const dataContact = [
     companyEmail: '',
     address: 'Vivacus Street no.2 Block C/10A, Paris',
     website: '',
-    favorited: true,
-  },
-];
+    favorited: true
+  }
+]
 
 function sortByKey(array, key) {
   return array.sort((a, b) => {
-    const x = a[key];
-    const y = b[key];
-    return x < y ? -1 : x > y ? 1 : 0;
-  });
+    const x = a[key]
+    const y = b[key]
+    return x < y ? -1 : x > y ? 1 : 0
+  })
 }
 function equalize(array) {
-  let max = 0;
-  const res = [...array];
+  let max = 0
+  const res = [...array]
   for (const i of array) {
     if (i.length > max) {
-      max = i.length;
+      max = i.length
     }
   }
   for (let i = 0; i < array.length; i += 1) {
-    console.log(Math.floor((max - array[i].length) / 2) * '\u00a0\u00a0');
+    console.log(Math.floor((max - array[i].length) / 2) * '\u00a0\u00a0')
     if (array[i].length < max) {
       res[i] =
         '\u00a0\u00a0'.repeat((max - array[i].length) / 2) +
         array[i] +
-        '\u00a0\u00a0'.repeat((max - array[i].length) / 2);
-      console.log(res[i]);
+        '\u00a0\u00a0'.repeat((max - array[i].length) / 2)
+      console.log(res[i])
     }
   }
-  return res;
+  return res
 }
 function ExpertsPage(props) {
-  const title = brand.name + ' - Blank Page';
-  const description = brand.desc;
-  const { classes } = props;
-  const f = equalize([
-    'РАЗВЛЕЧЕНИЯ',
-    'РАЗВЛЕЧЕНИ',
-    'РАЗВЛЕЧЕНЯ',
-    'РАЗВЛЕЧЕИЯ',
-    'РИЯ',
-    'РАЗВЛИЯ',
-    'РАЗВЛЧЕНИЯ',
-    'РАЗВЕЧЕНИЯ',
-    'РАЗЛЕЧЕНИЯ',
-    'РЧЕНИЯ',
-    'РЗВЛЕЧЕНИЯ',
-    'АЗВЛЕЧЕНИЯ',
-    'РАЗВЛЕЧЕНИЯ',
-    'РАЗНИ',
-    'РАЗВЛЕЧЕНЯ',
-    'РАЗВЛЕЧЕИЯ',
-    'РАЗВЛЕЧНИЯ',
-    'РАЗВЛЕЕНИЯ',
-    'РАЗВЛЧИЯ',
-    'РАЗВЕЧЕНИЯ',
-    'РАЗЛЕЧЕНИЯ',
-    'РАВЛЕЧЕНИЯ',
-    'ЛЕЧЕНИЯ',
-    'АЗВЛЕЧЕНИЯ',
-  ]);
-  const types = useRef();
-  const [filters, setFilters] = useState(Array(12).fill(false));
-  const [data, setData] = useState([...dataContact]);
-  const [sort1, setSort1] = useState(0);
-  const [sort2, setSort2] = useState(0);
-  const [start, setStart] = useState(0);
-  const [items, setItems] = useState(1);
   useEffect(() => {
-    setItems(Math.floor(types.current.clientWidth / 158));
-    console.log(items);
-  }, [window.innerWidth]);
+    axios.get('/specializations').then((res) => {
+      const specializationsArr = res.data.map((item) => {
+        return item.name
+      })
+      setSpecializations(specializationsArr)
+    })
+  }, [])
+
+  const [specializations, setSpecializations] = useState([])
+  const title = brand.name + ' - Blank Page'
+  const description = brand.desc
+  const { classes } = props
+  // const f = equalize([
+  //   'РАЗВЛЕЧЕНИЯ',
+  //   'РАЗВЛЕЧЕНИ',
+  //   'РАЗВЛЕЧЕНЯ',
+  //   'РАЗВЛЕЧЕИЯ',
+  //   'РИЯ',
+  //   'РАЗВЛИЯ',
+  //   'РАЗВЛЧЕНИЯ',
+  //   'РАЗВЕЧЕНИЯ',
+  //   'РАЗЛЕЧЕНИЯ',
+  //   'РЧЕНИЯ',
+  //   'РЗВЛЕЧЕНИЯ',
+  //   'АЗВЛЕЧЕНИЯ',
+  //   'РАЗВЛЕЧЕНИЯ',
+  //   'РАЗНИ',
+  //   'РАЗВЛЕЧЕНЯ',
+  //   'РАЗВЛЕЧЕИЯ',
+  //   'РАЗВЛЕЧНИЯ',
+  //   'РАЗВЛЕЕНИЯ',
+  //   'РАЗВЛЧИЯ',
+  //   'РАЗВЕЧЕНИЯ',
+  //   'РАЗЛЕЧЕНИЯ',
+  //   'РАВЛЕЧЕНИЯ',
+  //   'ЛЕЧЕНИЯ',
+  //   'АЗВЛЕЧЕНИЯ',
+  // ]);
+  const f = equalize(specializations)
+  const types = useRef()
+  const [filters, setFilters] = useState(Array(12).fill(false))
+  const [data, setData] = useState([...dataContact])
+  const [sort1, setSort1] = useState(0)
+  const [sort2, setSort2] = useState(0)
+  const [start, setStart] = useState(0)
+  const [items, setItems] = useState(1)
+  useEffect(() => {
+    setItems(Math.floor(types.current.clientWidth / 158))
+    console.log(items)
+  }, [window.innerWidth])
   return (
     <div>
       <Helmet>
         <title>{title}</title>
-        <meta name="description" content={description} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="twitter:title" content={title} />
-        <meta property="twitter:description" content={description} />
+        <meta name='description' content={description} />
+        <meta property='og:title' content={title} />
+        <meta property='og:description' content={description} />
+        <meta property='twitter:title' content={title} />
+        <meta property='twitter:description' content={description} />
       </Helmet>
-      <Typography variant="h4" component="h5">
+      <Typography variant='h4' component='h5'>
         Эксперты
       </Typography>
       <Divider className={classes.divider} />
@@ -230,13 +242,13 @@ function ExpertsPage(props) {
           //   alignItems="center"
         >
           <Grid item md={0}>
-            <Grid container direction="column" justifyContent="center">
+            <Grid container direction='column' justifyContent='center'>
               <Grid>
                 <ExpandLess
                   className={start === 0 ? classes.disabled : classes.icon}
                   onClick={() => {
                     if (start > 0) {
-                      setStart(start - items);
+                      setStart(start - items)
                     }
                   }}
                 />
@@ -252,9 +264,9 @@ function ExpertsPage(props) {
                       : classes.icon
                   }
                   onClick={() => {
-                    console.log(Math.floor(types.current.clientWidth / 158));
+                    console.log(Math.floor(types.current.clientWidth / 158))
                     if (f.length - start - items > 0) {
-                      setStart(start + items);
+                      setStart(start + items)
                     }
                   }}
                 />
@@ -265,21 +277,21 @@ function ExpertsPage(props) {
             <Grid
               container
               spacing={3}
-              alignItems="center"
-              justifyContent="center"
+              alignItems='center'
+              justifyContent='center'
               innerRef={types}
             >
               {f.slice(start, start + items * 2).map((filter, index) => (
                 <Grid item>
                   <Button
                     onClick={() => {
-                      const arr = [...filters];
-                      arr[index] = !arr[index];
-                      setFilters(arr);
+                      const arr = [...filters]
+                      arr[index] = !arr[index]
+                      setFilters(arr)
                     }}
                     variant={filters[index] ? 'contained' : 'outlined'}
                     color={filters[index] ? 'primary' : 'white'}
-                    size="medium"
+                    size='medium'
                   >
                     {filter.replace(/ /g, '\u00a0\u00a0')}
                   </Button>
@@ -294,11 +306,11 @@ function ExpertsPage(props) {
             xs={10}
             spacing={3}
             container
-            alignItems="center"
-            justifyContent="center"
+            alignItems='center'
+            justifyContent='center'
           >
             <Grid item>
-              <Typography variant="h6" component="h6">
+              <Typography variant='h6' component='h6'>
                 Фильтр по <br />
                 экспертам
               </Typography>
@@ -308,40 +320,40 @@ function ExpertsPage(props) {
             </Grid>
           </Grid>
           <Grid item className={classes.hide}>
-            <Divider orientation="vertical" />
+            <Divider orientation='vertical' />
           </Grid>
           <Grid
             item
             container
-            direction="column"
+            direction='column'
             md={3}
             sm={6}
             xs={12}
-            justifyContent="space-around"
+            justifyContent='space-around'
             className={classes.filters}
           >
             <Grid
               container
               spacing={1}
-              justifyContent="center"
+              justifyContent='center'
               className={sort1 === 0 ? classes.clickable : classes.selected}
               onClick={() => {
-                setSort2(0);
-                let d;
+                setSort2(0)
+                let d
                 if (sort1 === 0) {
-                  d = sortByKey([...data], 'rating');
-                  setSort1(1);
+                  d = sortByKey([...data], 'rating')
+                  setSort1(1)
                 } else if (sort1 === 1) {
-                  d = [...data];
-                  d = d.reverse();
-                  setSort1(2);
+                  d = [...data]
+                  d = d.reverse()
+                  setSort1(2)
                 } else {
-                  d = [...dataContact];
-                  setSort1(0);
+                  d = [...dataContact]
+                  setSort1(0)
                 }
 
-                setData(d);
-                console.table(data);
+                setData(d)
+                console.table(data)
               }}
             >
               <Grid item>
@@ -358,26 +370,26 @@ function ExpertsPage(props) {
             </Grid>
             <Grid
               container
-              alignItems="center"
-              justifyContent="center"
+              alignItems='center'
+              justifyContent='center'
               className={sort2 === 0 ? classes.clickable : classes.selected}
               onClick={() => {
-                setSort1(0);
-                let d;
+                setSort1(0)
+                let d
                 if (sort2 === 0) {
-                  d = sortByKey([...data], 'likes');
-                  setSort2(1);
+                  d = sortByKey([...data], 'likes')
+                  setSort2(1)
                 } else if (sort2 === 1) {
-                  d = [...data];
-                  d = d.reverse();
-                  setSort2(2);
+                  d = [...data]
+                  d = d.reverse()
+                  setSort2(2)
                 } else {
-                  d = [...dataContact];
-                  setSort2(0);
+                  d = [...dataContact]
+                  setSort2(0)
                 }
 
-                setData(d);
-                console.table(data);
+                setData(d)
+                console.table(data)
               }}
               spacing={1}
             >
@@ -403,7 +415,7 @@ function ExpertsPage(props) {
           {data.map((d) => (
             <Grid
               container
-              direction="row"
+              direction='row'
               className={classes.contact}
               spacing={3}
             >
@@ -411,15 +423,15 @@ function ExpertsPage(props) {
                 <Grid
                   container
                   className={classes.listItem}
-                  justifyContent="space-between"
+                  justifyContent='space-between'
                   spacing={1}
-                  alignItems="center"
+                  alignItems='center'
                 >
                   <Grid
                     container
                     item
                     spacing={2}
-                    alignItems="center"
+                    alignItems='center'
                     md={5}
                     sm={12}
                   >
@@ -427,13 +439,13 @@ function ExpertsPage(props) {
                       <Avatar src={d.avatar} className={classes.avatar} />
                     </Grid>
                     <Grid item>
-                      <Tooltip title="Карточка эксперта">
+                      <Tooltip title='Карточка эксперта'>
                         <Typography
-                          variant="h5"
+                          variant='h5'
                           className={classes.clickable}
                           onClick={() => {
                             window.location.href =
-                              link.profile.root + '/expert/58';
+                              link.profile.root + '/expert/58'
                           }}
                         >
                           {d.name}
@@ -452,7 +464,7 @@ function ExpertsPage(props) {
                     md={7}
                     sm={12}
                     xs={12}
-                    justifyContent="flex-end"
+                    justifyContent='flex-end'
                     className={classes.stars}
                   >
                     {[...Array(d.rating)].map((star) => (
@@ -474,7 +486,7 @@ function ExpertsPage(props) {
                 md={4}
                 sm={12}
                 xs={12}
-                wrap="nowrap"
+                wrap='nowrap'
                 style={{ paddingTop: 0, paddingBottom: 0 }}
               >
                 <Grid
@@ -483,7 +495,7 @@ function ExpertsPage(props) {
                   className={classes.hide}
                   style={{ padding: 0 }}
                 >
-                  <Divider orientation="vertical" />
+                  <Divider orientation='vertical' />
                 </Grid>
 
                 {/* <Grid item direction="column" justifyContent="space-between"> */}
@@ -495,25 +507,25 @@ function ExpertsPage(props) {
                   // xs={12}
                   spacing={1}
                   // style={{ padding: "30px" }}
-                  justifyContent="space-around"
-                  alignItems="center"
-                  wrap="nowrap"
+                  justifyContent='space-around'
+                  alignItems='center'
+                  wrap='nowrap'
                 >
                   <Grid
                     container
                     item
                     md={6}
-                    justifyContent="center"
-                    alignItems="center"
+                    justifyContent='center'
+                    alignItems='center'
                     spacing={1}
-                    wrap="nowrap"
+                    wrap='nowrap'
                   >
                     <Grid item>
-                      <Tooltip title="Like">
+                      <Tooltip title='Like'>
                         <IconButton
-                          size="small"
+                          size='small'
                           className={classes.greenText}
-                          aria-label="Telp"
+                          aria-label='Telp'
                         >
                           <ThumbUp />
                         </IconButton>
@@ -527,17 +539,17 @@ function ExpertsPage(props) {
                     item
                     container
                     md={6}
-                    wrap="nowrap"
-                    justifyContent="center"
-                    alignItems="center"
+                    wrap='nowrap'
+                    justifyContent='center'
+                    alignItems='center'
                     spacing={1}
                   >
                     <Grid item>
-                      <Tooltip title="Dislike">
+                      <Tooltip title='Dislike'>
                         <IconButton
-                          size="small"
+                          size='small'
                           className={classes.greenText}
-                          aria-label="Telp"
+                          aria-label='Telp'
                         >
                           <ThumbDown />
                         </IconButton>
@@ -555,7 +567,7 @@ function ExpertsPage(props) {
                   className={classes.hide}
                   style={{ padding: 0 }}
                 >
-                  <Divider orientation="vertical" />
+                  <Divider orientation='vertical' />
                 </Grid>
                 {/* <Grid
               item
@@ -570,24 +582,24 @@ function ExpertsPage(props) {
                   md={6}
                   // sm={6}
                   // style={{ padding: "30px 0" }}
-                  justifyContent="space-around"
-                  alignItems="center"
+                  justifyContent='space-around'
+                  alignItems='center'
                 >
                   <Grid item>
-                    <Tooltip title="Chat">
+                    <Tooltip title='Chat'>
                       <IconButton
                         className={classes.blueText}
-                        aria-label="Chat"
+                        aria-label='Chat'
                       >
                         <Chat />
                       </IconButton>
                     </Tooltip>
                   </Grid>
                   <Grid item>
-                    <Tooltip title="Call">
+                    <Tooltip title='Call'>
                       <IconButton
                         className={classes.blueText}
-                        aria-label="Email"
+                        aria-label='Email'
                       >
                         <Videocam />
                       </IconButton>
@@ -602,7 +614,7 @@ function ExpertsPage(props) {
         </div>
         <Divider />
         <Grid
-          justifyContent="flex-end"
+          justifyContent='flex-end'
           spacing={4}
           container
           style={{ padding: '24px' }}
@@ -633,10 +645,10 @@ function ExpertsPage(props) {
       </Paper>
       <Divider className={classes.divider} />
     </div>
-  );
+  )
 }
 ExpertsPage.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+  classes: PropTypes.object.isRequired
+}
 
-export default withStyles(styles)(ExpertsPage);
+export default withStyles(styles)(ExpertsPage)
