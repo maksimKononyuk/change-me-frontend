@@ -1,0 +1,5 @@
+export const PREV_STEP = 'PREV_STEP';
+export const NEXT_STEP = 'NEXT_STEP';
+export const CHOSE_INTEREST = 'CHOSE_INTEREST';
+export const UNCHOSE_INTEREST = 'UNCHOSE_INTEREST';
+export const LOAD_PROFILE_EDIT = 'LOAD_PROFILE_EDIT';

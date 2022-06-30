@@ -1,0 +1,87 @@
+{
+  "extends": ["eslint-config-airbnb", "plugin:flowtype/recommended"],
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true
+  },
+  "parser": "@babel/eslint-parser",
+  "rules": {
+    "no-nested-ternary": 0,
+    "import/no-unresolved": 0,
+    "import/no-named-as-default": 0,
+    "no-unused-expressions": 0,
+    "no-unused-vars": 0,
+    "no-restricted-syntax": 0,
+    "no-constant-condition": 0,
+    "no-undef": 0,
+    "import/no-import-module-exports": "off",
+    "jsx-a11y/control-has-associated-label": "off",
+    "react/destructuring-assignment": "off",
+    "react/no-unstable-nested-components": "off",
+    "react/no-array-index-key": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/jsx-fragments": "off",
+    "react/function-component-definition": "off",
+    "react/prop-types": "off",
+    "comma-dangle": 0, // not sure why airbnb turned this on. gross!
+    "indent": [2, 2, { "SwitchCase": 1 }],
+    "no-console": 0,
+    "no-alert": 0,
+    "no-return-assign": 0,
+    "id-length": 0,
+    "no-script-url": 0,
+    "import/no-extraneous-dependencies": 0,
+    "no-underscore-dangle": 0,
+    "react/jsx-filename-extension": 0,
+    "global-require": 0,
+    "import/newline-after-import": 0,
+    "import/extensions": 0,
+    "implicit-arrow-linebreak": 0,
+    "prefer-template": 0,
+    "max-len": 0,
+    "react/prefer-stateless-function": 0,
+    "react/forbid-prop-types": 0,
+    "react/no-unescaped-entities": 0,
+    "react/no-danger": 0,
+    "jsx-a11y/href-no-hash": "off",
+    "jsx-a11y/aria-role": "off",
+    "function-paren-newline": 0,
+    "react/no-typos": 0,
+    "jsx-a11y/anchor-is-valid": 0,
+    "react/default-props-match-prop-types": 0,
+    "arrow-parens": 0,
+    "jsx-a11y/label-has-for": [
+      2,
+      {
+        "required": {
+          "every": ["id"]
+        }
+      }
+    ],
+    "object-curly-newline": [
+      "error",
+      {
+        "ObjectPattern": "never"
+      }
+    ],
+    "no-confusing-arrow": "off",
+    // "implicit-arrow-linebreak": "off",
+    "react/jsx-wrap-multilines": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "operator-linebreak": "off"
+  },
+  "plugins": ["react", "import", "flowtype"],
+  "settings": {
+    "import/parser": "@babel/eslint-parser",
+    "import/resolve": {
+      "moduleDirectory": ["node_modules", "src"]
+    }
+  },
+  "globals": {
+    "__CLIENT__": true,
+    "__SERVER__": true,
+    "beforeAll": true,
+    "afterAll": true
+  }
+}
