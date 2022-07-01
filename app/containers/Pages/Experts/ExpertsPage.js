@@ -173,6 +173,26 @@ function ExpertsPage(props) {
   const [dataContact, setDataContact] = useState([])
   const [data, setData] = useState([])
 
+  const [numberOfUsersPerPage] = useState(5)
+  const [currentPage, setCurrentPage] = useState(1)
+  const lastUserIndex = currentPage * numberOfUsersPerPage
+  const firstUserIndex = lastUserIndex - numberOfUsersPerPage
+  const currentUserArr = data.slice(firstUserIndex, lastUserIndex)
+  const totalPages = Math.ceil(data.length / numberOfUsersPerPage)
+
+  const paginationNext = (pageNumber) => {
+    pageNumber < totalPages && setCurrentPage(pageNumber + 1)
+  }
+  const paginationPrev = (pageNumber) => {
+    pageNumber > 1 && setCurrentPage(pageNumber - 1)
+  }
+  const paginationFirstPage = () => {
+    setCurrentPage(1)
+  }
+  const paginationLastPage = () => {
+    setCurrentPage(totalPages)
+  }
+
   useEffect(() => {
     const reqestAsync = async () => {
       let res = await axios.get('specializations')
@@ -180,10 +200,6 @@ function ExpertsPage(props) {
       res = await axios.get('users')
       setDataContact(res.data)
       setData(res.data)
-      console.log(
-        '///////////////////////////////////////////////////////////////////////'
-      )
-      console.log(res.data)
     }
     reqestAsync()
   }, [])
@@ -424,12 +440,13 @@ function ExpertsPage(props) {
 
         <Divider />
         <div className={classes.container}>
-          {data.map((elem) => (
+          {currentUserArr.map((elem) => (
             <Grid
               container
               direction='row'
               className={classes.contact}
               spacing={3}
+              key={elem.id}
             >
               <Grid item md={8} sm={12} xs={12}>
                 <Grid
@@ -639,18 +656,30 @@ function ExpertsPage(props) {
             <ArrowDropDown className={classes.clickable} />
           </Grid>
           <Grid item>
-            <Typography>1-5 или 13</Typography>
+            <Typography>{`${firstUserIndex + 1}-${lastUserIndex} или ${
+              data.length
+            }`}</Typography>
           </Grid>
-          <Grid item>
+          <Grid item onClick={paginationFirstPage}>
             <SkipPreviousOutlined className={classes.clickable} />
           </Grid>
-          <Grid item>
+          <Grid
+            item
+            onClick={() => {
+              paginationPrev(currentPage)
+            }}
+          >
             <ArrowBackIosSharp className={classes.clickable} />
           </Grid>
-          <Grid item>
+          <Grid
+            item
+            onClick={() => {
+              paginationNext(currentPage)
+            }}
+          >
             <ArrowForwardIosSharp className={classes.clickable} />
           </Grid>
-          <Grid item>
+          <Grid item onClick={paginationLastPage}>
             <SkipNextOutlined className={classes.clickable} />
           </Grid>
         </Grid>
