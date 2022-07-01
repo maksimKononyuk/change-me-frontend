@@ -41,105 +41,105 @@ import avatarApi from 'dan-api/images/avatars'
 import link from 'dan-api/ui/link'
 import styles from './experts-jss'
 
-const dataContact = [
-  {
-    id: '1',
-    avatar: avatarApi[9],
-    name: 'James Doe',
-    title: 'Эксперт',
-    rating: 4,
-    likes: 11,
-    dislikes: 1,
-    phone: '+6281234567890',
-    secondaryPhone: '+6280987654321',
-    personalEmail: 'johndoe@mail.com',
-    companyEmail: 'johndoe@company.com',
-    address: 'Ipsum Street no.77 Block A/5A, New York',
-    website: 'http://doeclans.net',
-    favorited: false
-  },
-  {
-    id: '2',
-    avatar: avatarApi[8],
-    name: 'Jim Doe',
-    title: 'Эксперт',
-    rating: 3,
-    likes: 56,
-    dislikes: 26,
-    phone: '+657890321145',
-    secondaryPhone: '',
-    personalEmail: 'jimdoe@mail.com',
-    companyEmail: 'jimdoe@company.com',
-    address: 'Lorem Street no.76 Block B/8B, Brooklyn',
-    website: 'http://doejim.com',
-    favorited: true
-  },
-  {
-    id: '3',
-    avatar: avatarApi[2],
-    name: 'Jane Doe',
-    title: 'Эксперт',
-    rating: 5,
-    likes: 5,
-    dislikes: 0,
-    phone: '+45353695',
-    secondaryPhone: '+678910111213',
-    personalEmail: 'janedoe@mail.com',
-    companyEmail: 'janedoe@company.com',
-    address: 'Dolor Street no.76 Block B/8B, Tokyo',
-    website: 'http://janedoe.com',
-    favorited: false
-  },
-  {
-    id: '4',
-    avatar: avatarApi[10],
-    name: 'Jinx Doe',
-    title: 'Эксперт',
-    rating: 4,
-    likes: 11,
-    dislikes: 1,
+// const dataContact = [
+//   {
+//     id: '1',
+//     avatar: avatarApi[9],
+//     name: 'James Doe',
+//     title: 'Эксперт',
+//     rating: 4,
+//     likes: 11,
+//     dislikes: 1,
+//     phone: '+6281234567890',
+//     secondaryPhone: '+6280987654321',
+//     personalEmail: 'johndoe@mail.com',
+//     companyEmail: 'johndoe@company.com',
+//     address: 'Ipsum Street no.77 Block A/5A, New York',
+//     website: 'http://doeclans.net',
+//     favorited: false
+//   },
+//   {
+//     id: '2',
+//     avatar: avatarApi[8],
+//     name: 'Jim Doe',
+//     title: 'Эксперт',
+//     rating: 3,
+//     likes: 56,
+//     dislikes: 26,
+//     phone: '+657890321145',
+//     secondaryPhone: '',
+//     personalEmail: 'jimdoe@mail.com',
+//     companyEmail: 'jimdoe@company.com',
+//     address: 'Lorem Street no.76 Block B/8B, Brooklyn',
+//     website: 'http://doejim.com',
+//     favorited: true
+//   },
+//   {
+//     id: '3',
+//     avatar: avatarApi[2],
+//     name: 'Jane Doe',
+//     title: 'Эксперт',
+//     rating: 5,
+//     likes: 5,
+//     dislikes: 0,
+//     phone: '+45353695',
+//     secondaryPhone: '+678910111213',
+//     personalEmail: 'janedoe@mail.com',
+//     companyEmail: 'janedoe@company.com',
+//     address: 'Dolor Street no.76 Block B/8B, Tokyo',
+//     website: 'http://janedoe.com',
+//     favorited: false
+//   },
+//   {
+//     id: '4',
+//     avatar: avatarApi[10],
+//     name: 'Jinx Doe',
+//     title: 'Эксперт',
+//     rating: 4,
+//     likes: 11,
+//     dislikes: 1,
 
-    phone: '+678543210012',
-    secondaryPhone: '',
-    personalEmail: 'jinx@mail.com',
-    companyEmail: '',
-    address: 'Paskal Street no.101 Block B/10B, Samarinda',
-    website: '',
-    favorited: 'false'
-  },
-  {
-    id: '5',
-    avatar: avatarApi[4],
-    name: 'Jihan Doe',
-    title: 'Эксперт',
-    rating: 2,
-    likes: 11,
-    dislikes: 59,
-    phone: '+45353695',
-    secondaryPhone: '+56743210468',
-    personalEmail: 'jihan@mail.com',
-    companyEmail: 'jihan@company.com',
-    address: 'Sit amet Street no.76 Block B/8B, New York',
-    website: '',
-    favorited: true
-  },
-  {
-    id: '6',
-    avatar: avatarApi[7],
-    name: 'Johny Doe',
-    title: 'Эксперт',
-    rating: 4,
-    likes: 11,
-    dislikes: 1,
-    phone: '+2234561234',
-    secondaryPhone: '+6742234235666',
-    personalEmail: 'johny_doe@mail.com',
-    companyEmail: '',
-    address: 'Vivacus Street no.2 Block C/10A, Paris',
-    website: '',
-    favorited: true
-  }
-]
+//     phone: '+678543210012',
+//     secondaryPhone: '',
+//     personalEmail: 'jinx@mail.com',
+//     companyEmail: '',
+//     address: 'Paskal Street no.101 Block B/10B, Samarinda',
+//     website: '',
+//     favorited: 'false'
+//   },
+//   {
+//     id: '5',
+//     avatar: avatarApi[4],
+//     name: 'Jihan Doe',
+//     title: 'Эксперт',
+//     rating: 2,
+//     likes: 11,
+//     dislikes: 59,
+//     phone: '+45353695',
+//     secondaryPhone: '+56743210468',
+//     personalEmail: 'jihan@mail.com',
+//     companyEmail: 'jihan@company.com',
+//     address: 'Sit amet Street no.76 Block B/8B, New York',
+//     website: '',
+//     favorited: true
+//   },
+//   {
+//     id: '6',
+//     avatar: avatarApi[7],
+//     name: 'Johny Doe',
+//     title: 'Эксперт',
+//     rating: 4,
+//     likes: 11,
+//     dislikes: 1,
+//     phone: '+2234561234',
+//     secondaryPhone: '+6742234235666',
+//     personalEmail: 'johny_doe@mail.com',
+//     companyEmail: '',
+//     address: 'Vivacus Street no.2 Block C/10A, Paris',
+//     website: '',
+//     favorited: true
+//   }
+// ]
 
 function sortByKey(array, key) {
   return array.sort((a, b) => {
@@ -169,13 +169,25 @@ function equalize(array) {
   return res
 }
 function ExpertsPage(props) {
+  const [specializations, setSpecializations] = useState([])
+  const [dataContact, setDataContact] = useState([])
+  const [data, setData] = useState([])
+
   useEffect(() => {
-    axios.get('/specializations').then((res) => {
+    const reqestAsync = async () => {
+      let res = await axios.get('specializations')
       setSpecializations(res.data)
-    })
+      res = await axios.get('users')
+      setDataContact(res.data)
+      setData(res.data)
+      console.log(
+        '///////////////////////////////////////////////////////////////////////'
+      )
+      console.log(res.data)
+    }
+    reqestAsync()
   }, [])
 
-  const [specializations, setSpecializations] = useState([])
   const title = brand.name + ' - Blank Page'
   const description = brand.desc
   const { classes } = props
@@ -212,7 +224,6 @@ function ExpertsPage(props) {
   )
   const types = useRef()
   const [filters, setFilters] = useState(Array(12).fill(false))
-  const [data, setData] = useState([...dataContact])
   const [sort1, setSort1] = useState(0)
   const [sort2, setSort2] = useState(0)
   const [start, setStart] = useState(0)
@@ -413,7 +424,7 @@ function ExpertsPage(props) {
 
         <Divider />
         <div className={classes.container}>
-          {data.map((d) => (
+          {data.map((elem) => (
             <Grid
               container
               direction='row'
@@ -437,7 +448,7 @@ function ExpertsPage(props) {
                     sm={12}
                   >
                     <Grid item>
-                      <Avatar src={d.avatar} className={classes.avatar} />
+                      <Avatar src={avatarApi[8]} className={classes.avatar} />
                     </Grid>
                     <Grid item>
                       <Tooltip title='Карточка эксперта'>
@@ -449,11 +460,11 @@ function ExpertsPage(props) {
                               link.profile.root + '/expert/58'
                           }}
                         >
-                          {d.name}
+                          {`${elem.first_name} ${elem.last_name}`}
                         </Typography>
                       </Tooltip>
                       <Typography className={classes.grey}>
-                        {d.title}
+                        {elem.role.name}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -468,12 +479,12 @@ function ExpertsPage(props) {
                     justifyContent='flex-end'
                     className={classes.stars}
                   >
-                    {[...Array(d.rating)].map((star) => (
+                    {[...Array(elem.rate)].map((star) => (
                       <Grid item>
                         <ToggleStar className={classes.icon} />
                       </Grid>
                     ))}
-                    {[...Array(5 - d.rating)].map((star) => (
+                    {[...Array(5 - elem.rate)].map((star) => (
                       <Grid item>
                         <ToggleStarBorder className={classes.icon} />
                       </Grid>
@@ -533,7 +544,7 @@ function ExpertsPage(props) {
                       </Tooltip>
                     </Grid>
                     <Grid item>
-                      <Typography noWrap>{d.likes}</Typography>
+                      <Typography noWrap>{elem.likes}</Typography>
                     </Grid>
                   </Grid>
                   <Grid
@@ -557,7 +568,7 @@ function ExpertsPage(props) {
                       </Tooltip>
                     </Grid>
                     <Grid item>
-                      <Typography>{d.dislikes}</Typography>
+                      <Typography>{elem.dislikes}</Typography>
                     </Grid>
                   </Grid>
                 </Grid>
