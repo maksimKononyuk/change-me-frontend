@@ -41,106 +41,6 @@ import avatarApi from 'dan-api/images/avatars'
 import link from 'dan-api/ui/link'
 import styles from './experts-jss'
 
-// const dataContact = [
-//   {
-//     id: '1',
-//     avatar: avatarApi[9],
-//     name: 'James Doe',
-//     title: 'Эксперт',
-//     rating: 4,
-//     likes: 11,
-//     dislikes: 1,
-//     phone: '+6281234567890',
-//     secondaryPhone: '+6280987654321',
-//     personalEmail: 'johndoe@mail.com',
-//     companyEmail: 'johndoe@company.com',
-//     address: 'Ipsum Street no.77 Block A/5A, New York',
-//     website: 'http://doeclans.net',
-//     favorited: false
-//   },
-//   {
-//     id: '2',
-//     avatar: avatarApi[8],
-//     name: 'Jim Doe',
-//     title: 'Эксперт',
-//     rating: 3,
-//     likes: 56,
-//     dislikes: 26,
-//     phone: '+657890321145',
-//     secondaryPhone: '',
-//     personalEmail: 'jimdoe@mail.com',
-//     companyEmail: 'jimdoe@company.com',
-//     address: 'Lorem Street no.76 Block B/8B, Brooklyn',
-//     website: 'http://doejim.com',
-//     favorited: true
-//   },
-//   {
-//     id: '3',
-//     avatar: avatarApi[2],
-//     name: 'Jane Doe',
-//     title: 'Эксперт',
-//     rating: 5,
-//     likes: 5,
-//     dislikes: 0,
-//     phone: '+45353695',
-//     secondaryPhone: '+678910111213',
-//     personalEmail: 'janedoe@mail.com',
-//     companyEmail: 'janedoe@company.com',
-//     address: 'Dolor Street no.76 Block B/8B, Tokyo',
-//     website: 'http://janedoe.com',
-//     favorited: false
-//   },
-//   {
-//     id: '4',
-//     avatar: avatarApi[10],
-//     name: 'Jinx Doe',
-//     title: 'Эксперт',
-//     rating: 4,
-//     likes: 11,
-//     dislikes: 1,
-
-//     phone: '+678543210012',
-//     secondaryPhone: '',
-//     personalEmail: 'jinx@mail.com',
-//     companyEmail: '',
-//     address: 'Paskal Street no.101 Block B/10B, Samarinda',
-//     website: '',
-//     favorited: 'false'
-//   },
-//   {
-//     id: '5',
-//     avatar: avatarApi[4],
-//     name: 'Jihan Doe',
-//     title: 'Эксперт',
-//     rating: 2,
-//     likes: 11,
-//     dislikes: 59,
-//     phone: '+45353695',
-//     secondaryPhone: '+56743210468',
-//     personalEmail: 'jihan@mail.com',
-//     companyEmail: 'jihan@company.com',
-//     address: 'Sit amet Street no.76 Block B/8B, New York',
-//     website: '',
-//     favorited: true
-//   },
-//   {
-//     id: '6',
-//     avatar: avatarApi[7],
-//     name: 'Johny Doe',
-//     title: 'Эксперт',
-//     rating: 4,
-//     likes: 11,
-//     dislikes: 1,
-//     phone: '+2234561234',
-//     secondaryPhone: '+6742234235666',
-//     personalEmail: 'johny_doe@mail.com',
-//     companyEmail: '',
-//     address: 'Vivacus Street no.2 Block C/10A, Paris',
-//     website: '',
-//     favorited: true
-//   }
-// ]
-
 function sortByKey(array, key) {
   return array.sort((a, b) => {
     const x = a[key]
@@ -175,8 +75,13 @@ function ExpertsPage(props) {
 
   const [numberOfUsersPerPage] = useState(5)
   const [currentPage, setCurrentPage] = useState(1)
-  const lastUserIndex = currentPage * numberOfUsersPerPage
-  const firstUserIndex = lastUserIndex - numberOfUsersPerPage
+
+  const firstUserIndex = (currentPage - 1) * numberOfUsersPerPage
+  const lastUserIndex =
+    data.length >= firstUserIndex + numberOfUsersPerPage
+      ? firstUserIndex + numberOfUsersPerPage
+      : data.length
+
   const currentUserArr = data.slice(firstUserIndex, lastUserIndex)
   const totalPages = Math.ceil(data.length / numberOfUsersPerPage)
 
@@ -207,37 +112,32 @@ function ExpertsPage(props) {
   const title = brand.name + ' - Blank Page'
   const description = brand.desc
   const { classes } = props
-  // const f = equalize([
-  //   'РАЗВЛЕЧЕНИЯ',
-  //   'РАЗВЛЕЧЕНИ',
-  //   'РАЗВЛЕЧЕНЯ',
-  //   'РАЗВЛЕЧЕИЯ',
-  //   'РИЯ',
-  //   'РАЗВЛИЯ',
-  //   'РАЗВЛЧЕНИЯ',
-  //   'РАЗВЕЧЕНИЯ',
-  //   'РАЗЛЕЧЕНИЯ',
-  //   'РЧЕНИЯ',
-  //   'РЗВЛЕЧЕНИЯ',
-  //   'АЗВЛЕЧЕНИЯ',
-  //   'РАЗВЛЕЧЕНИЯ',
-  //   'РАЗНИ',
-  //   'РАЗВЛЕЧЕНЯ',
-  //   'РАЗВЛЕЧЕИЯ',
-  //   'РАЗВЛЕЧНИЯ',
-  //   'РАЗВЛЕЕНИЯ',
-  //   'РАЗВЛЧИЯ',
-  //   'РАЗВЕЧЕНИЯ',
-  //   'РАЗЛЕЧЕНИЯ',
-  //   'РАВЛЕЧЕНИЯ',
-  //   'ЛЕЧЕНИЯ',
-  //   'АЗВЛЕЧЕНИЯ',
-  // ]);
-  const f = equalize(
-    specializations.map((item) => {
-      return item.name
+
+  const f = equalize(specializations)
+  const [changedSpecializationsArr, setChangedSpecializationsArr] = useState([])
+
+  const filtered = () => {
+    paginationFirstPage()
+    let arr = [...data].filter((item) => {
+      let result = false
+      for (let i = 0; i < item.specializations.length; i++) {
+        if (
+          changedSpecializationsArr.some(
+            (tag) => item.specializations[i].pivot.specialization_id == tag
+          )
+        ) {
+          result = true
+        }
+      }
+      return result
     })
-  )
+    setData(arr)
+  }
+
+  useEffect(() => {
+    changedSpecializationsArr.length && filtered()
+  }, [changedSpecializationsArr])
+
   const types = useRef()
   const [filters, setFilters] = useState(Array(12).fill(false))
   const [sort1, setSort1] = useState(0)
@@ -250,6 +150,9 @@ function ExpertsPage(props) {
   }, [window.innerWidth])
   return (
     <div>
+      <div>
+        <h1>{changedSpecializationsArr}</h1>
+      </div>
       <Helmet>
         <title>{title}</title>
         <meta name='description' content={description} />
@@ -316,12 +219,27 @@ function ExpertsPage(props) {
                       const arr = [...filters]
                       arr[index] = !arr[index]
                       setFilters(arr)
+                      if (!filters[index]) {
+                        setChangedSpecializationsArr((prev) => {
+                          let arrCopy = [...prev]
+                          arrCopy.push(filter.id)
+                          return arrCopy
+                        })
+                      }
+                      if (filters[index]) {
+                        setChangedSpecializationsArr((prev) => {
+                          let arrCopy = [...prev]
+                          arrCopy = arrCopy.filter((item) => item !== filter.id)
+                          return arrCopy
+                        })
+                      }
+                      setData(dataContact)
                     }}
                     variant={filters[index] ? 'contained' : 'outlined'}
                     color={filters[index] ? 'primary' : 'white'}
                     size='medium'
                   >
-                    {filter.replace(/ /g, '\u00a0\u00a0')}
+                    {filter.name.replace(/ /g, '\u00a0\u00a0')}
                   </Button>
                 </Grid>
               ))}
@@ -376,7 +294,8 @@ function ExpertsPage(props) {
                   d = d.reverse()
                   setSort1(2)
                 } else {
-                  d = [...dataContact]
+                  d = [...data]
+                  d = d.reverse()
                   setSort1(0)
                 }
 
@@ -412,7 +331,8 @@ function ExpertsPage(props) {
                   d = d.reverse()
                   setSort2(2)
                 } else {
-                  d = [...dataContact]
+                  d = [...data]
+                  d = d.reverse()
                   setSort2(0)
                 }
 
@@ -656,7 +576,7 @@ function ExpertsPage(props) {
             <ArrowDropDown className={classes.clickable} />
           </Grid>
           <Grid item>
-            <Typography>{`${firstUserIndex + 1}-${lastUserIndex} или ${
+            <Typography>{`${firstUserIndex + 1}-${lastUserIndex} из ${
               data.length
             }`}</Typography>
           </Grid>
