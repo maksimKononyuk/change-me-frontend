@@ -151,13 +151,21 @@ function ExpertsPage(props) {
     let arr = [...likesButtonArr]
     let result = arr.find((x) => x.id === id)
     if (reaction == 'like') {
-      await axios.post(`users/${id}/reaction`, { reaction_id: 1 })
+      !result.like &&
+        (await axios.post(`users/${id}/reaction`, { reaction_id: 1 }))
+      result.like &&
+        (await axios.delete(`users/${id}/reaction`, { reaction_id: 1 }))
       requestForUsers()
       result.like = !result.like
+      result.like && (result.dislike = false)
     } else {
-      await axios.post(`users/${id}/reaction`, { reaction_id: 2 })
+      !result.dislike &&
+        (await axios.post(`users/${id}/reaction`, { reaction_id: 2 }))
+      result.dislike &&
+        (await axios.delete(`users/${id}/reaction`, { reaction_id: 2 }))
       requestForUsers()
       result.dislike = !result.dislike
+      result.dislike && (result.like = false)
     }
     setLikesButtonArr(arr)
   }
