@@ -72,6 +72,7 @@ function ExpertsPage(props) {
   const [specializations, setSpecializations] = useState([])
   const [dataContact, setDataContact] = useState([])
   const [data, setData] = useState([])
+  const [likesButtonArr, setLikesButtonArr] = useState([])
 
   const [numberOfUsersPerPage] = useState(5)
   const [currentPage, setCurrentPage] = useState(1)
@@ -98,6 +99,13 @@ function ExpertsPage(props) {
     setCurrentPage(totalPages)
   }
 
+  const requestForUsers = () => {
+    axios.get('users').then((res) => {
+      setDataContact(res.data)
+      setData(res.data)
+    })
+  }
+
   useEffect(() => {
     const reqestAsync = async () => {
       let res = await axios.get('specializations')
@@ -105,6 +113,11 @@ function ExpertsPage(props) {
       res = await axios.get('users')
       setDataContact(res.data)
       setData(res.data)
+      let arr = []
+      res.data.forEach((el) => {
+        arr.push({ id: el.id, like: false, dislike: false })
+      })
+      setLikesButtonArr(arr)
     }
     reqestAsync()
   }, [])
@@ -132,6 +145,21 @@ function ExpertsPage(props) {
       return result
     })
     setData(arr)
+  }
+
+  const reactions = async (reaction, id) => {
+    let arr = [...likesButtonArr]
+    let result = arr.find((x) => x.id === id)
+    if (reaction == 'like') {
+      await axios.post(`users/${id}/reaction`, { reaction_id: 1 })
+      requestForUsers()
+      result.like = !result.like
+    } else {
+      await axios.post(`users/${id}/reaction`, { reaction_id: 2 })
+      requestForUsers()
+      result.dislike = !result.dislike
+    }
+    setLikesButtonArr(arr)
   }
 
   useEffect(() => {
@@ -469,11 +497,22 @@ function ExpertsPage(props) {
                     spacing={1}
                     wrap='nowrap'
                   >
-                    <Grid item>
+                    <Grid
+                      item
+                      onClick={() => {
+                        reactions('like', elem.id)
+                      }}
+                    >
                       <Tooltip title='Like'>
                         <IconButton
                           size='small'
-                          className={classes.greenText}
+                          className={
+                            likesButtonArr.find((x) => x.id === elem.id)?.like
+                              ? classes.greenText
+                              : classes.greenText +
+                                ' ' +
+                                classes.greenTextActive
+                          }
                           aria-label='Telp'
                         >
                           <ThumbUp />
@@ -493,11 +532,23 @@ function ExpertsPage(props) {
                     alignItems='center'
                     spacing={1}
                   >
-                    <Grid item>
+                    <Grid
+                      item
+                      onClick={() => {
+                        reactions('dislike', elem.id)
+                      }}
+                    >
                       <Tooltip title='Dislike'>
                         <IconButton
                           size='small'
-                          className={classes.greenText}
+                          className={
+                            likesButtonArr.find((x) => x.id === elem.id)
+                              ?.dislike
+                              ? classes.greenText
+                              : classes.greenText +
+                                ' ' +
+                                classes.greenTextActive
+                          }
                           aria-label='Telp'
                         >
                           <ThumbDown />
