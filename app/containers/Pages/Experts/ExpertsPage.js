@@ -517,7 +517,7 @@ function ExpertsPage(props) {
                               ? classes.greenText
                               : classes.greenText +
                                 ' ' +
-                                classes.greenTextActive
+                                classes.greenTextNoActive
                           }
                           aria-label='Telp'
                         >
@@ -553,7 +553,7 @@ function ExpertsPage(props) {
                               ? classes.greenText
                               : classes.greenText +
                                 ' ' +
-                                classes.greenTextActive
+                                classes.greenTextNoActive
                           }
                           aria-label='Telp'
                         >

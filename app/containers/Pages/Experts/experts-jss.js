@@ -107,7 +107,7 @@ const styles = (theme) => ({
       minHeight: '25px'
     }
   },
-  greenTextActive: {
+  greenTextNoActive: {
     backgroundColor: 'grey'
   },
   blueText: {
