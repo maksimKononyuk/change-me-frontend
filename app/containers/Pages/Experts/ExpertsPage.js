@@ -184,9 +184,6 @@ function ExpertsPage(props) {
   }, [window.innerWidth])
   return (
     <div>
-      <div>
-        <h1>{changedSpecializationsArr}</h1>
-      </div>
       <Helmet>
         <title>{title}</title>
         <meta name='description' content={description} />
