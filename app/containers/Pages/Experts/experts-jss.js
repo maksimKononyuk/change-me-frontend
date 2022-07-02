@@ -97,7 +97,7 @@ const styles = (theme) => ({
   },
   greenText: {
     color: '#fff',
-    backgroundColor: green[500],
+    backgroundColor: green[900],
     padding: ' min(0.5vw, 20px)',
     '& svg': {
       fill: '#fff',
@@ -108,7 +108,7 @@ const styles = (theme) => ({
     }
   },
   greenTextNoActive: {
-    backgroundColor: 'grey'
+    backgroundColor: green[500]
   },
   blueText: {
     color: '#fff',
