@@ -148,8 +148,7 @@ function ExpertsPage(props) {
   }
 
   const reactions = async (reaction, id) => {
-    let arr = [...likesButtonArr]
-    let result = arr.find((x) => x.id === id)
+    let result = [...likesButtonArr].find((x) => x.id === id)
     if (reaction == 'like') {
       !result.like &&
         (await axios.post(`users/${id}/reaction`, { reaction_id: 1 }))
@@ -167,7 +166,6 @@ function ExpertsPage(props) {
       result.dislike = !result.dislike
       result.dislike && (result.like = false)
     }
-    setLikesButtonArr(arr)
   }
 
   useEffect(() => {
